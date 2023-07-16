@@ -1,0 +1,24 @@
+Source: yandex-maps-ui-kukusik
+Priority: optional
+Build-Depends: cdbs
+Maintainer: Kukusik <kukusik@kukusik.ru>
+
+Package: yandex-maps-ui-kukusik
+Priority: optional
+Architecture: all
+Description: WWW for kukusik
+
+Package: yandex-maps-ui-kukusik-static-1-0-0
+Priority: optional
+Architecture: all
+Description: Static for WWW for kukusik
+
+Package: yandex-maps-ui-kukusik-static
+Priority: optional
+Depends: yandex-maps-ui-kukusik-static-1-0-0 (>= 1.0.0)
+Architecture: all
+Description: Depends on latest yandex-maps-ui-kukusik-static-*
+
+Package: yandex-maps-ui-kukusik-nginx-config
+Architecture: all
+Description: Nginx config for kukusik

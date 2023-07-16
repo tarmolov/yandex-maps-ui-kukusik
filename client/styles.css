@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#app {
+    text-align: center;
+}
+
+.pin {
+    display: inline-block;
+    width: 40px;
+    height: 50px;
+    background-image: url('pin-icon-green.png');
+}

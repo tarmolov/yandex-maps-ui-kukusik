@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ln -s /etc/nginx/sites-available/yandex-maps-ui-kukusik.conf /etc/nginx/sites-enabled/yandex-maps-ui-kukusik.conf

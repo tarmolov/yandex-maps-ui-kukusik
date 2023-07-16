@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/buildvars.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+ENVIRONMENT=$(shell cat /etc/yandex/environment.type)
+
+DEB_PACKAGE_DESTDIR=debian/$(DEB_SOURCE_PACKAGE)/usr/local/www/app/$(DEB_SOURCE_PACKAGE)
+DEB_NGINX_CONFIG_DESTDIR=debian/$(DEB_SOURCE_PACKAGE)-nginx-config/etc/nginx/sites-available
+
+STATIC_PACKAGE=$(if $(filter $(DEB_SOURCE_PACKAGE)-static-%,$(DEB_PACKAGES)),$(DEB_SOURCE_PACKAGE)-static-$(subst .,-,$(DEB_VERSION)))
+DEB_STATIC_PACKAGE_DESTDIR=debian/$(STATIC_PACKAGE)/usr/local/www/static/$(subst yandex-maps-ui-,,$(DEB_SOURCE_PACKAGE))/$(DEB_VERSION)/
+
+debian/control::
+	sed -i 's!^\(Package: \).\+-static\-.*!\1$(STATIC_PACKAGE)!' $@
+	sed -i 's!^\(Depends: \).\+-static\-.*!\1$(STATIC_PACKAGE) (>= $(DEB_VERSION))!' $@
+
+build:
+	ln -snf $(ENVIRONMENT) configs/current
+	find configs -type f -exec sed -i 's/{{DEB_VERSION}}/$(DEB_VERSION)/g' {} \;
+	npm i
+	npm run build
+	npm prune --production
+
+install/$(DEB_SOURCE_PACKAGE)::
+	mkdir -p $(DEB_PACKAGE_DESTDIR)
+	cp -r node_modules configs server package.json $(DEB_PACKAGE_DESTDIR)
+
+install/$(STATIC_PACKAGE)::
+	mkdir -p $(DEB_STATIC_PACKAGE_DESTDIR)
+	cp -r out $(DEB_STATIC_PACKAGE_DESTDIR)
+
+install/$(DEB_SOURCE_PACKAGE)-nginx-config::
+	mkdir -p $(DEB_NGINX_CONFIG_DESTDIR)
+	cp debian/nginx.conf $(DEB_NGINX_CONFIG_DESTDIR)/$(DEB_SOURCE_PACKAGE).conf
