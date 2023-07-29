@@ -17,7 +17,7 @@ RUN npm install -g pm2
 RUN mkdir -p /etc/yandex
 RUN echo production > /etc/yandex/environment.type
 
-# nginx config for servcing static files
+# nginx config for serving static files
 RUN echo '\
 server {\n\
     listen 8082;\n\
