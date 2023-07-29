@@ -1,7 +1,7 @@
 # yandex-maps-ui-kukusik
 ![screenshot](screenshot.png)
 
-A demo project for deploypment with debian-packages. For demonstrantion purposes only.
+A demo project for deployment with debian-packages. For demonstrantion purposes only.
 
 ## Prerequisites
 * [Docker](https://www.docker.com/)
